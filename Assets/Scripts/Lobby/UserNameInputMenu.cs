@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Assets.Scripts.Common;
+using Assets.Scripts.UIStateMachine;
+using System;
 
 namespace Assets.Scripts.Lobby
 {
-  public class UserNameInputMenu : MonoBehaviour
+  public class UserNameInputMenu : BaseUiMenu
   {
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private Button submitButton;
@@ -13,12 +16,12 @@ namespace Assets.Scripts.Lobby
 
     private void Start()
     {
-      if (PlayerPrefs.HasKey("Username"))
+      if (PlayerPrefs.HasKey(Constants.UserNameKey))
       {
-        string savedName = PlayerPrefs.GetString("Username");
+        string savedName = PlayerPrefs.GetString(Constants.UserNameKey);
         usernameInputField.text = savedName;
         PlayerUsername = savedName;
-        gameObject.SetActive(false);
+        // UiStateMachine.Instance.UISTATE = UiState.Lobby;
       }
 
       submitButton.onClick.AddListener(OnSubmit);
@@ -35,11 +38,11 @@ namespace Assets.Scripts.Lobby
       }
 
       PlayerUsername = username;
-      PlayerPrefs.SetString("Username", username);
+      PlayerPrefs.SetString(Constants.UserNameKey, username);
       PlayerPrefs.Save();
 
       Debug.Log("Username saved: " + PlayerUsername);
-
+      UiStateMachine.Instance.UISTATE = UiState.Lobby;
     }
   }
 }
