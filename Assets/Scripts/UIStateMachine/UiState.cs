@@ -8,6 +8,9 @@ namespace Assets.Scripts.UIStateMachine
     Lobby,
     LobbyCodeMenu,
     JoinLobbyWithCode,
-    Game
+    SceneLoading,
+    WaitingForPlayers,
+    Game,
+    GameOver
   }
 }

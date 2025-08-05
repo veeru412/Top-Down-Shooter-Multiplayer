@@ -6,27 +6,35 @@ namespace Assets.Scripts.Player
   public class StandalonePlayerInput : MonoBehaviour, IPlayerInput
   {
 
-    private Vector3 moveDirection = Vector3.zero;
-    public Vector3 GetMovementInput() => moveDirection;
+    [SerializeField] private LayerMask groundLayer = default;
+    [SerializeField] private float maxRayDistance = 100f;
 
-    private void Update()
+    private Camera mainCamera;
+
+    public Vector2 MoveInput => new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+    public Vector3 LookPosition
     {
-      moveDirection = Vector3.zero;
-      if(Input.GetKey(KeyCode.W))
+      get
       {
-        moveDirection.z = 1;
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, maxRayDistance, groundLayer))
+        {
+          return hit.point;
+        }
+        return transform.position + transform.forward * 5f;
       }
-      if(Input.GetKey(KeyCode.S))
+    }
+
+    public bool CanFire => Input.GetMouseButtonDown(0);
+
+    private void Awake()
+    {
+      mainCamera = Camera.main;
+      if(mainCamera == null)
       {
-        moveDirection.z = -1;
-      }
-      if(Input.GetKey(KeyCode.D))
-      {
-        moveDirection.x = 1;
-      }
-      if(Input.GetKey(KeyCode.A))
-      {
-        moveDirection.x = -1;
+        Debug.LogError("Can't find main camera");
+        gameObject.SetActive(false);
       }
     }
 

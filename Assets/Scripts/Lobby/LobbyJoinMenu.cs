@@ -25,6 +25,7 @@ namespace Assets.Scripts.Lobby
         Debug.LogError("Must enter code to join lobby");
       }
       NetworkManager.Singleton.StartClient();
+      UiStateMachine.Instance.UISTATE = UiState.SceneLoading;
     }
   }
 }

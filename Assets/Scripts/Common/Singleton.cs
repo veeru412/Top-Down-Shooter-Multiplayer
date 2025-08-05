@@ -36,6 +36,7 @@ namespace Assets.Scripts.Common
       if (instance == null)
       {
         instance = this as T;
+        DontDestroyOnLoad(gameObject);
       }
       else if (instance != this)
       {

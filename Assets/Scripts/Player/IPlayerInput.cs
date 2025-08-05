@@ -5,6 +5,8 @@ namespace Assets.Scripts.Player
 {
   public interface IPlayerInput 
   {
-    Vector3 GetMovementInput();
+    Vector2 MoveInput { get; }
+    Vector3 LookPosition { get; }
+    bool CanFire { get; }
   }
 }

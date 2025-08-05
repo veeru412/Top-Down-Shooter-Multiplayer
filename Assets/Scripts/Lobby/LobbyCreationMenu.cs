@@ -23,7 +23,7 @@ namespace Assets.Scripts.Lobby
     private void CreateAndJoinLobby()
     {
       NetworkManager.Singleton.StartHost();
-      UiStateMachine.Instance.UISTATE = UiState.Game;
+      UiStateMachine.Instance.UISTATE = UiState.SceneLoading;
     }
 
     private string GenerateLobbyCode()
