@@ -33,5 +33,15 @@ namespace Assets.Scripts.Player.HealthContols
 
       healthBars[id] = bar;
     }
+    public void UnRegisterHealthBar(PlayerHealth playerHealth)
+    {
+      ulong id = playerHealth.OwnerClientId;
+      healthBars.TryGetValue(id, out GameObject barUI);
+      if(barUI != null)
+      {
+        Destroy(barUI);
+        healthBars.Remove(id);
+      }
+    }
   }  
 }

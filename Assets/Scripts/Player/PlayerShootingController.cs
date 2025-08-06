@@ -15,6 +15,7 @@ namespace Assets.Scripts.Player
 
     private float lastFireTime;
     private IPlayerInput playerInput;
+    private PlayerHealth playerHealth;
 
     private void Start()
     {
@@ -23,6 +24,7 @@ namespace Assets.Scripts.Player
       {
         Init(input);
       }
+      playerHealth = GetComponent<PlayerHealth>();
     }
 
     public void Init(IPlayerInput playerInput) => this.playerInput = playerInput;
@@ -98,6 +100,7 @@ namespace Assets.Scripts.Player
     private bool CanProcessPlayerInput =>
         playerInput != null &&
         IsOwner &&
+        playerHealth.IsAlive &&
         GameStateManager.Instance.CurrentGameState == Game.GameState.Playing &&
         Time.time >= lastFireTime + fireCooldown;
   }

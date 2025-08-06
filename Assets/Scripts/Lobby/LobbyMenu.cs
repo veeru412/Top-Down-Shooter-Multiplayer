@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts.Common;
 using Assets.Scripts.UIStateMachine;
+using Unity.Netcode;
 
 namespace Assets.Scripts.Lobby
 {
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Lobby
     [SerializeField] private Button hostButton;
     [SerializeField] private Button joinButton;
     [SerializeField] private Button quickJoinButton;
+    [SerializeField] private Button quitButton;
 
 
     private void Start()
@@ -20,6 +22,7 @@ namespace Assets.Scripts.Lobby
       hostButton.onClick.AddListener(HostLobby);
       joinButton.onClick.AddListener(JoinLobby);
       quickJoinButton.onClick.AddListener(QuickJoin);
+      quitButton.onClick.AddListener(Quit);
       SetUsername();
     }
 
@@ -42,6 +45,12 @@ namespace Assets.Scripts.Lobby
     private void QuickJoin()
     {
       Debug.Log("Attempting to quick join a random lobby...");
+      NetworkManager.Singleton.StartClient();
+      UiStateMachine.Instance.UISTATE = UiState.SceneLoading;
+    }
+    private void Quit()
+    {
+      Application.Quit();
     }
   }
 }

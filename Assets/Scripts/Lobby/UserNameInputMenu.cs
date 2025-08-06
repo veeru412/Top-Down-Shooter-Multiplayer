@@ -12,6 +12,11 @@ namespace Assets.Scripts.Lobby
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private Button submitButton;
 
+
+    // PlayerUsername is static to ensure it is accessible globally across the application instance.
+    // In a multiplayer setup using NGO (Netcode for GameObjects) with multiple instances running on the same machine,
+    // storing the username in a local non-static variable could cause conflicts due to overlapping data.
+    // Using a static property prevents these conflicts by keeping the value instance-specific within each running app process.
     public static string PlayerUsername { get; private set; }
 
     private void Start()

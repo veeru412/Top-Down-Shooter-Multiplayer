@@ -1,24 +1,31 @@
-﻿using Unity.Netcode;
+﻿using Assets.Scripts.Game;
+using Assets.Scripts.Lobby;
+using Unity.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
   public class PlayerNetworkManager : NetworkBehaviour
   {
-    /*public override void OnNetworkSpawn()
+    public NetworkVariable<FixedString512Bytes> PlayerName = new NetworkVariable<FixedString512Bytes>(
+        "",
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
+    public override void OnNetworkSpawn()
     {
-      if (!IsOwner) return;
-
-      Debug.Log("Local player spawned");
-
-      if (GameManager.Instance.IsRoundInProgress)
+      if (IsOwner)
       {
-        SpawnPlayer();
+        string name = UserNameInputMenu.PlayerUsername;
+        SetPlayerNameServerRpc(name);
       }
-      else
-      {
-        ShowWaitingUI();
-      }
-    }*/
+    }
+
+    [ServerRpc]
+    void SetPlayerNameServerRpc(string name)
+    {
+      PlayerName.Value = name;
+    }
   }
 }

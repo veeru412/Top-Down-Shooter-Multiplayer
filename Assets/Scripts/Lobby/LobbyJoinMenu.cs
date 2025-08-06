@@ -23,6 +23,7 @@ namespace Assets.Scripts.Lobby
       if(string.IsNullOrEmpty(code) )
       {
         Debug.LogError("Must enter code to join lobby");
+        return;
       }
       NetworkManager.Singleton.StartClient();
       UiStateMachine.Instance.UISTATE = UiState.SceneLoading;
