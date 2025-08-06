@@ -15,8 +15,6 @@ namespace Assets.Scripts.Game
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server);
 
-    private float timer;
-
     private readonly NetworkVariable<float> timeRemaining = new NetworkVariable<float>(
         0f,
         NetworkVariableReadPermission.Everyone,
@@ -25,7 +23,10 @@ namespace Assets.Scripts.Game
 
     public float TimeRemaining => timeRemaining.Value;
     private event Action<GameState> gameStateChangedInternal;
-
+    private event Action OnLeaderboardDataChanged;
+    public void TriggerLeaderBoardStateChange() => OnLeaderboardDataChanged?.Invoke();
+    public void RegisterLeaderBoardChange(Action onLeaderBoardChange) => OnLeaderboardDataChanged += onLeaderBoardChange;
+    public void UnRegisterLeaderBoardChange(Action onLeaderBoardChange) => OnLeaderboardDataChanged -= onLeaderBoardChange;
     public GameState CurrentGameState => gameState.Value;
     public void RegisterOnGameStateChanged(Action<GameState> callback)
     {

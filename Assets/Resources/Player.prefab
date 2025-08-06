@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 7494668390222815276}
   - component: {fileID: 1932777915363729129}
   - component: {fileID: 3392828847040179595}
-  - component: {fileID: 4396666486704557807}
   - component: {fileID: 4239635198069112120}
   - component: {fileID: 2983473417057649115}
   - component: {fileID: 8190367247196230086}
@@ -184,22 +183,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &4396666486704557807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506080290748785608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 509c3e9fcf0348749a442668ae801298, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  deathParthicle: {fileID: 154925548169233754}
-  Health:
-    m_InternalValue: 100
 --- !u!114 &4239635198069112120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,6 +781,11 @@ MonoBehaviour:
         byte0507: 0
         byte0508: 0
         byte0509: 0
+  deathParthicle: {fileID: 154925548169233754}
+  Health:
+    m_InternalValue: 100
+  kills:
+    m_InternalValue: 0
 --- !u!1 &5165535421214662147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,7 +1049,7 @@ AudioSource:
   m_GameObject: {fileID: 6648058697029287846}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 12314e6c61c302140a0ac86a4c82fd19, type: 2}
   m_audioClip: {fileID: 8300000, guid: 9c6dc5d88e6cb264c8a8ebb29e453199, type: 3}
   m_Resource: {fileID: 8300000, guid: 9c6dc5d88e6cb264c8a8ebb29e453199, type: 3}
   m_PlayOnAwake: 0

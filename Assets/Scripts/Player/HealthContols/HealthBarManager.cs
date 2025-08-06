@@ -21,7 +21,7 @@ namespace Assets.Scripts.Player.HealthContols
       Instance= null;
     }
 
-    public void RegisterHealthBar(PlayerHealth playerHealth)
+    public void RegisterHealthBar(PlayerNetworkManager playerHealth)
     {
       ulong id = playerHealth.OwnerClientId;
 
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Player.HealthContols
 
       healthBars[id] = bar;
     }
-    public void UnRegisterHealthBar(PlayerHealth playerHealth)
+    public void UnRegisterHealthBar(PlayerNetworkManager playerHealth)
     {
       ulong id = playerHealth.OwnerClientId;
       healthBars.TryGetValue(id, out GameObject barUI);

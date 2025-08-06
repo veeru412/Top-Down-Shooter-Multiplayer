@@ -9,10 +9,10 @@ namespace Assets.Scripts.Player.HealthContols
     [SerializeField] private Image helathFillImage;
     private Transform target;
     private Camera mainCamera;
-    private PlayerHealth playerHealth;
+    private PlayerNetworkManager playerHealth;
     private Transform mTransform;
 
-    public void Init(PlayerHealth health, Transform followTarget)
+    public void Init(PlayerNetworkManager health, Transform followTarget)
     {
       playerHealth = health;
       target = followTarget;

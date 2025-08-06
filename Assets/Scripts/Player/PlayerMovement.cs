@@ -10,7 +10,7 @@ namespace Assets.Scripts.Player
   public class PlayerMovement : NetworkBehaviour
   {
     private IPlayerInput playerInput;
-    private PlayerHealth playerHealth;
+    private PlayerNetworkManager playerHealth;
     public void Init(IPlayerInput playerInput) => this.playerInput = playerInput;
 
     private void Update()
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Player
       {
         Init(input);
       }
-      playerHealth = GetComponent<PlayerHealth>();
+      playerHealth = GetComponent<PlayerNetworkManager>();
     }
     private bool CanProcessPlayerInput =>  playerInput != null && IsOwner && GameStateManager.Instance.CurrentGameState == Game.GameState.Playing && playerHealth.IsAlive;
     

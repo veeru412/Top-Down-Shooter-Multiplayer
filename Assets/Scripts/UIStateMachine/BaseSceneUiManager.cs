@@ -4,13 +4,13 @@ namespace Assets.Scripts.UIStateMachine
 {
   public abstract class BaseSceneUiManager : MonoBehaviour
   {
-    protected virtual void Awake()
+    protected virtual void Start()
     {
       UiStateMachine.Instance.OnStateChange += OnUiStateChanged;
       UiStateMachine.Instance.UISTATE = UiState.UserInput;
     }
 
-    protected virtual void OnDisable()
+    protected virtual void OnDestroy()
     {
       if (UiStateMachine.Instance != null)
       {

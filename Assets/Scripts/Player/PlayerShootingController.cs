@@ -15,7 +15,7 @@ namespace Assets.Scripts.Player
 
     private float lastFireTime;
     private IPlayerInput playerInput;
-    private PlayerHealth playerHealth;
+    private PlayerNetworkManager playerHealth;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Player
       {
         Init(input);
       }
-      playerHealth = GetComponent<PlayerHealth>();
+      playerHealth = GetComponent<PlayerNetworkManager>();
     }
 
     public void Init(IPlayerInput playerInput) => this.playerInput = playerInput;
@@ -49,10 +49,19 @@ namespace Assets.Scripts.Player
       Ray ray = new Ray(origin, direction);
       if (Physics.Raycast(ray, out RaycastHit hit, 100f))
       {
-        var targetHealth = hit.collider.GetComponent<PlayerHealth>();
+        var targetHealth = hit.collider.GetComponent<PlayerNetworkManager>();
         if (targetHealth != null && targetHealth.IsAlive)
         {
-          targetHealth.ApplyDamage();
+          targetHealth.ApplyDamage(out bool isDead);
+          if (isDead)
+          {
+            var shooterObject = NetworkManager.Singleton.ConnectedClients[shooterId].PlayerObject;
+            var shooterData = shooterObject.GetComponent<PlayerNetworkManager>();
+            if (shooterData != null)
+            {
+              shooterData.AddKills();
+            }
+          }
         }
       }
 
@@ -70,18 +79,23 @@ namespace Assets.Scripts.Player
     [ClientRpc]
     private void PlaySfxClientRpc(ulong shooterId)
     {
-      if (NetworkManager.LocalClientId == shooterId)
+      if (NetworkManager.Singleton.LocalClientId == shooterId)
         return;
-      var shootingControls = FindObjectsByType<PlayerShootingController>(FindObjectsSortMode.None);
-      foreach (var player in shootingControls)
+
+      if (NetworkManager.Singleton.ConnectedClients.TryGetValue(shooterId, out var client))
       {
-        if (player.OwnerClientId == shooterId)
+        var shooterObj = client.PlayerObject;
+        if (shooterObj != null)
         {
-          player.PlaySfx(); 
-          break;
+          var shootingController = shooterObj.GetComponent<PlayerShootingController>();
+          if (shootingController != null)
+          {
+            shootingController.PlaySfx();
+          }
         }
       }
     }
+
 
     private void PlaySfx()
     {

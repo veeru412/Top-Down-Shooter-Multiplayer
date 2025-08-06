@@ -44,14 +44,16 @@ namespace Assets.Scripts.Game
       };
     }
 
-    private void Start()
+    protected override void Start()
     {
+      base.Start();
       GameStateManager.Instance.RegisterOnGameStateChanged(OnGameStateChanged);
       UiStateMachine.Instance.OpenMenu(waitingScreen);
     }
   
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+      base.OnDestroy();
       if(GameStateManager.Instance != null)
       {
         GameStateManager.Instance.UnregisterOnGameStateChanged(OnGameStateChanged);
