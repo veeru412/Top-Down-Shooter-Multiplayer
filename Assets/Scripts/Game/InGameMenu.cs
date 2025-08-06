@@ -63,8 +63,11 @@ namespace Assets.Scripts.Game
         availableTextElements[i].gameObject.SetActive(false);
       }
     }
-  
-    IEnumerator Start()
+    private void OnEnable()
+    {
+      StartCoroutine(WaitAndLoadLeaderBoard());
+    }
+    IEnumerator WaitAndLoadLeaderBoard()
     {
       yield return new WaitForSeconds(2);
       CachePlayersFromNetwork();
@@ -72,10 +75,12 @@ namespace Assets.Scripts.Game
       GameStateManager.Instance.RegisterLeaderBoardChange(UpdateLeaderBoard);
       Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.Auto);
     }
+
     private void OnDisable()
     {
       GameStateManager.Instance.UnRegisterLeaderBoardChange(UpdateLeaderBoard);
       Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+      playerCache.Clear();
     }
   }
 }

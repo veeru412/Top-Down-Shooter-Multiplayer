@@ -114,10 +114,10 @@ namespace Assets.Scripts.Player
       HealthBarManager.Instance.RegisterHealthBar(this);
       kills.OnValueChanged += OnKillsUpdate;
     }
-
-    public override void OnDestroy()
+    public override void OnNetworkDespawn()
     {
-      base.OnDestroy();
+      base.OnNetworkDespawn();
+      kills.Value = 0;
       kills.OnValueChanged -= OnKillsUpdate;
       HealthBarManager.Instance.UnRegisterHealthBar(this);
     }
